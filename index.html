@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض مشاريع الطالبات</title>
+    <meta name="description" content="معرض مشاريع الطالبات - منصة لعرض مشاريع طالبات المدرسة الإبداعية والمميزة">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --accent: #ec4899;
+            --background: #ffffff;
+            --foreground: #1f2937;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --card-bg: #f9fafb;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--foreground);
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(139,92,246,0.05) 0%, rgba(236,72,153,0.05) 100%);
+            padding: 4rem 0;
+        }
+
+        .hero-content {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .school-name {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(139,92,246,0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .highlight {
+            color: var(--primary);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-back {
+            background: var(--card-bg);
+            color: var(--foreground);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(139,92,246,0.2);
+        }
+
+        .stat-card.full {
+            grid-column: 1 / -1;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--foreground);
+        }
+
+        .stat-label,
+        .stat-title {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .stat-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        .about {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .about-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+        }
+
+        .about-card p {
+            color: var(--muted);
+        }
+
+        .featured {
+            padding: 4rem 0;
+            background: rgba(139,92,246,0.02);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            text-align: center;
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: var(--card-bg);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .project-student {
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-grade {
+            display: inline-block;
+            background: rgba(139,92,246,0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .cta {
+            padding: 4rem 0;
+            background: rgba(139,92,246,0.05);
+        }
+
+        .cta-content {
+            text-align: center;
+        }
+
+        .cta-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, rgba(139,92,246,0.05) 0%, rgba(236,72,153,0.05) 100%);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        .projects-section {
+            padding: 4rem 0;
+        }
+
+        .project-detail {
+            padding: 2rem 0;
+        }
+
+        .detail-header {
+            margin-bottom: 2rem;
+        }
+
+        .detail-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-icon {
+            font-size: 1.2rem;
+        }
+
+        .detail-description {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .detail-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .media-item img,
+        .media-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .contact-section {
+            padding: 4rem 0;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info h2,
+        .contact-form-container h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+        }
+
+        .contact-item h3 {
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-item p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+
+        .footer p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <h1 class="logo">معرض المشاريع</h1>
+                <ul class="nav-menu">
+                    <li><a class="nav-link active" onclick="showPage('home')">الرئيسية</a></li>
+                    <li><a class="nav-link" onclick="showPage('projects')">المشاريع</a></li>
+                    <li><a class="nav-link" onclick="showPage('contact')">تواصل معنا</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home-page" class="page active">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 class="school-name">مدرسة بسياء للتعليم الاساسي</h2>
+                    <div class="badge">✨ مرحباً بكِ في معرض المشاريع</div>
+                    <h1 class="hero-title">اكتشفي إبداعات <span class="highlight">طالباتنا</span> المميزة</h1>
+                    <p class="hero-description">فرصة لعرض مشاريعكِ المميزة من تصميم وإنتاج وصناعة. شاركي إبداعكِ وكوني جزءاً من رائدات الأعمال!</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="showPage('projects')">تصفح المشاريع →</button>
+                        <button class="btn btn-outline" onclick="showPage('contact')">✨ شاركي مشروعك</button>
+                    </div>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">✨</div>
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">مشاريع رائعة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">طالبة مبدعة</div>
+                    </div>
+                    <div class="stat-card full">
+                        <div class="stat-icon">❤️</div>
+                        <div class="stat-title">دعم الإبداع الطلابي</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="about-icon">🎯</div>
+                        <h3>هدفنا</h3>
+                        <p>تشجيع ودعم طالباتنا على تطوير مهاراتهن وعرض إبداعاتهن في مجالات مختلفة</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">✨</div>
+                        <h3>رؤيتنا</h3>
+                        <p>بناء جيل من رائدات الأعمال الصغيرات اللاتي يمتلكن المهارات والثقة لتحقيق أحلامهن</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">❤️</div>
+                        <h3>قيمنا</h3>
+                        <p>الإبداع، الجودة، والتميز في كل مشروع تقدمه طالباتنا المبدعات</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured">
+            <div class="container">
+                <h2 class="section-title">المشاريع المميزة</h2>
+                <p class="section-description">اكتشفي بعض المشاريع الإبداعية التي قامت بها طالباتنا</p>
+                <div id="featured-projects" class="projects-grid"></div>
+                <div class="text-center">
+                    <button class="btn btn-outline" onclick="showPage('projects')">عرض جميع المشاريع →</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-icon">✨</div>
+                    <h2>هل لديكِ مشروع مميز؟</h2>
+                    <p>شاركي إبداعك معنا وكوني جزءاً من رائدات الأعمال الصغيرات في مدرستنا</p>
+                    <button class="btn btn-primary" onclick="showPage('contact')">تواصلي معنا الآن →</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="projects-page" class="page">
+        <section class="page-header">
+            <div class="container">
+                <h1>جميع المشاريع</h1>
+                <p>تصفحي مشاريع طالباتنا المبدعات</p>
+            </div>
+        </section>
+        <section class="projects-section">
+            <div class="container">
+                <div id="all-projects" class="projects-grid"></div>
+            </div>
+        </section>
+    </div>
+
+    <div id="project-detail-page" class="page">
+        <section class="page-header">
+            <div class="container">
+                <button class="btn btn-back" onclick="showPage('projects')">← رجوع للمشاريع</button>
+            </div>
+        </section>
+        <section class="project-detail">
+            <div class="container" id="project-detail-content"></div>
+        </section>
+    </div>
+
+    <div id="contact-page" class="page">
+        <section class="page-header">
+            <div class="container">
+                <h1>تواصلي معنا</h1>
+                <p>شاركي مشروعك المميز معنا وكوني جزءاً من رائدات الأعمال</p>
+            </div>
+        </section>
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div style="background: var(--card-bg); padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem;">
+                        <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--foreground);">فرصة لعرض مشاريعكِ المميزة!</h2>
+                        
+                        <p style="font-size: 1.1rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.8;">
+                            📣 <strong>هل لديكِ مشروع صغير مبدع</strong> مثل:
+                        </p>
+                        
+                        <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
+                            <li style="margin-bottom: 0.75rem; color: var(--foreground);">✓ تصميم بوسترات وفيديوهات</li>
+                            <li style="margin-bottom: 0.75rem; color: var(--foreground);">✓ إنتاج كوكيز أو حلويات</li>
+                            <li style="margin-bottom: 0.75rem; color: var(--foreground);">✓ صناعة أساور وإكسسوارات</li>
+                            <li style="margin-bottom: 0.75rem; color: var(--foreground);">✓ منتجات تجميلية أو غيرها</li>
+                        </ul>
+                        
+                        <p style="font-size: 1.1rem; color: var(--primary); margin-bottom: 1.5rem; font-weight: 600;">
+                            📌 شاركي إبداعكِ معنا!
+                        </p>
+                        
+                        <p style="color: var(--muted); margin-bottom: 1rem;">
+                            📸 <strong>صور ونماذج من المنتج/الخدمة:</strong> (ترسل الصور على الخاص)
+                        </p>
+                        
+                        <div style="background: rgba(139,92,246,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 2rem; border-right: 4px solid var(--primary);">
+                            <p style="color: var(--muted); font-size: 0.95rem; margin: 0;">
+                                📍 <strong>ملاحظة:</strong> سيتم عرض الإعلان في موقع المشاريع الطلابية ليتعرف الجميع على أعمالكِ الرائعة!
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05) 0%, rgba(236,72,153,0.05) 100%); padding: 2.5rem; border-radius: 16px; margin-top: 2rem;">
+                        <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--foreground);">📩 التواصل مع أخصائية التوجيه المهني</h2>
+                        
+                        <div class="contact-item" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="font-size: 2rem;">👩‍🏫</div>
+                            <div>
+                                <h3 style="margin-bottom: 0.25rem; color: var(--foreground);">الأستاذة شيخة الوردي</h3>
+                                <p style="color: var(--muted); font-size: 0.9rem;">أخصائية التوجيه المهني</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="font-size: 2rem;">📱</div>
+                            <div>
+                                <h3 style="margin-bottom: 0.25rem; color: var(--foreground);">رقم التواصل</h3>
+                                <p style="color: var(--primary); font-weight: 600; font-size: 1.1rem;">99219765</p>
+                            </div>
+                        </div>
+                        
+                        <div style="background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <p style="color: var(--muted); margin: 0;">
+                                يمكنك إرسال صور مشروعك والتفاصيل عبر <strong>الاتصال المباشر</strong> أو <strong>الرسائل النصية</strong>
+                            </p>
+                        </div>
+                        
+                        <div style="background: rgba(236,72,153,0.1); padding: 1rem; border-radius: 8px; border-right: 4px solid var(--accent);">
+                            <p style="color: var(--foreground); font-weight: 600; margin: 0;">
+                                ⭐ لا تفوتي الفرصة وكوني جزءاً من رائدات الأعمال الصغيرات في مدرستنا!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>عمل الطالبة وسن ابراهيم الشكيليه</p>
+        </div>
+    </footer>
+
+    <script>
+        let allProjects = [];
+        let currentProject = null;
+
+        // Load projects from JSON
+        async function loadProjects() {
+            try {
+                const response = await fetch('data/projects.json');
+                allProjects = await response.json();
+                displayFeaturedProjects();
+                displayAllProjects();
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        function displayFeaturedProjects() {
+            const container = document.getElementById('featured-projects');
+            const featured = allProjects.slice(0, 3);
+            container.innerHTML = featured.map(project => createProjectCard(project)).join('');
+        }
+
+        function displayAllProjects() {
+            const container = document.getElementById('all-projects');
+            container.innerHTML = allProjects.map(project => createProjectCard(project)).join('');
+        }
+
+        function createProjectCard(project) {
+            return `
+                <div class="project-card" onclick="showProjectDetail('${project.id}')">
+                    <img src="${project.cover}" alt="${project.title}" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">${project.title}</h3>
+                        <p class="project-student">👤 ${project.student}</p>
+                        ${project.grade ? `<span class="project-grade">📚 ${project.grade}</span>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showProjectDetail(projectId) {
+            currentProject = allProjects.find(p => p.id === projectId);
+            if (!currentProject) return;
+            
+            const container = document.getElementById('project-detail-content');
+            
+            const mediaHTML = [];
+            
+            if (currentProject.images && currentProject.images.length > 0) {
+                mediaHTML.push('<h3 style="margin-top: 2rem; margin-bottom: 1rem;">صور المشروع</h3>');
+                mediaHTML.push('<div class="media-grid">');
+                currentProject.images.forEach(img => {
+                    mediaHTML.push(`
+                        <div class="media-item">
+                            <img src="${img}" alt="${currentProject.title}">
+                        </div>
+                    `);
+                });
+                mediaHTML.push('</div>');
+            }
+            
+            if (currentProject.videos && currentProject.videos.length > 0) {
+                mediaHTML.push('<h3 style="margin-top: 2rem; margin-bottom: 1rem;">فيديوهات المشروع</h3>');
+                mediaHTML.push('<div class="media-grid">');
+                currentProject.videos.forEach(video => {
+                    mediaHTML.push(`
+                        <div class="media-item">
+                            <video controls>
+                                <source src="${video}" type="video/mp4">
+                            </video>
+                        </div>
+                    `);
+                });
+                mediaHTML.push('</div>');
+            }
+            
+            container.innerHTML = `
+                <div class="detail-header">
+                    <h1 class="detail-title">${currentProject.title}</h1>
+                    <div class="detail-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">👤</span>
+                            <span>${currentProject.student}</span>
+                        </div>
+                        ${currentProject.grade ? `
+                            <div class="meta-item">
+                                <span class="meta-icon">📚</span>
+                                <span>${currentProject.grade}</span>
+                            </div>
+                        ` : ''}
+                        ${currentProject.contact ? `
+                            <div class="meta-item">
+                                <span class="meta-icon">📱</span>
+                                <span>${currentProject.contact}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+                
+                <img src="${currentProject.cover}" alt="${currentProject.title}" class="detail-image">
+                
+                ${currentProject.description ? `
+                    <p class="detail-description">${currentProject.description}</p>
+                ` : ''}
+                
+                ${mediaHTML.join('')}
+            `;
+            
+            showPage('project-detail');
+        }
+
+        function showPage(pageName) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(`${pageName}-page`).classList.add('active');
+            
+            const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(link => 
+                link.getAttribute('onclick') === `showPage('${pageName}')`
+            );
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Load projects when page loads
+        window.addEventListener('load', loadProjects);
+    </script>
+</body>
+</html>
